@@ -32,7 +32,7 @@ public class GridBlock {
                 isGoal = true;
                 isWeakBlock = false;
                 break;
-            case " ", "":
+            case " ":
                 break;
             default: // goal (uppercase letter)
                 System.out.println(11 + type);
