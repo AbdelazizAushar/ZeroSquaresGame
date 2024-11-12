@@ -1,12 +1,12 @@
 import java.util.*;
 
 public class ZeroSquares {
-    ArrayList<State> states = new ArrayList<State>();
+    ArrayList<State> states = new ArrayList<>();
     GridBlock[][] grid;
 
     public ZeroSquares(GridBlock[][] grid, Player[] players) {
         this.grid = grid;
-        State firstState = new State(grid, players);
+        State firstState = new State(grid, players, null);
         this.states.add(firstState);
     }
 
@@ -22,5 +22,35 @@ public class ZeroSquares {
         }
         lastState.printGrid();
         System.out.println("Game Ended");
+    }
+
+    public Map<String, Object> solveByBFS() {
+        Queue<State> queue = new LinkedList<>();
+        Set<State> visited = new HashSet<>();
+        Map<String, Object> solution = new HashMap<>();
+        queue.add(states.getFirst());
+        visited.add(states.getFirst());
+
+        while(!queue.isEmpty()) {
+            State currentState = queue.poll();
+            if(currentState.goalCheck()) {
+                ArrayList<State> path = new ArrayList<>();
+                path.add(currentState);
+                while(currentState.parent != null) {
+                    currentState = currentState.parent;
+                    path.add(currentState);
+                }
+                solution.put("visitedSize", visited.size());
+                solution.put("path", path);
+                return solution;
+            }
+            for(State nextState : currentState.nextStates()) {
+                if(!visited.contains(nextState)) {
+                    queue.add(nextState);
+                    visited.add(nextState);
+                }
+            }
+        }
+        return solution;
     }
 }

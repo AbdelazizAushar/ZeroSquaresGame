@@ -4,11 +4,13 @@ public class State {
     GridBlock[][] grid;
     Player[] players;
     boolean isFinished;
+    State parent = null;
 
-    public State(GridBlock[][] grid, Player[] players) {
+    public State(GridBlock[][] grid, Player[] players, State parent) {
         this.grid = grid;
         this.players = players;
         this.isFinished = false;
+        this.parent = parent;
         initPlayersInGrid();
     }
 
@@ -190,7 +192,7 @@ public class State {
     private State deepCopy(State state) {
         GridBlock[][] newGridBlock = deepCopyGridHelper();
         Player[] newPlayers = deepCopyPlayerHelper();
-        return new State(newGridBlock, newPlayers);
+        return new State(newGridBlock, newPlayers ,this);
     }
 
     private Player[] deepCopyPlayerHelper() {
@@ -229,7 +231,12 @@ public class State {
         return this.isFinished == otherState.isFinished;
     }
 
-    public List<State> nextStates() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.deepHashCode(grid), Arrays.hashCode(players), isFinished);
+    }
+
+    public ArrayList<State> nextStates() {
         ArrayList<State> nextStates = new ArrayList<>();
         String[] directions = {"w", "a", "s", "d"};
         for (String direction : directions) {

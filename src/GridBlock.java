@@ -35,7 +35,6 @@ public class GridBlock {
             case " ":
                 break;
             default: // goal (uppercase letter)
-                System.out.println(11 + type);
                 isFree = true;
                 isGoal = true;
                 isWeakBlock = false;
