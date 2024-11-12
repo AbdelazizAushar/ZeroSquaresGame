@@ -34,7 +34,7 @@ public class Main {
         ZeroSquares game = new ZeroSquares(gr, players);
 
         // BFS Solution
-        Map<String, Object> solution = game.solveByBFS();
+        Map<String, Object> solution = game.solveByDFS();
         printPath(solution);
     }
 

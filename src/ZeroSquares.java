@@ -53,4 +53,34 @@ public class ZeroSquares {
         }
         return solution;
     }
+
+    public Map<String, Object> solveByDFS() {
+        Stack<State> stack = new Stack<>();
+        Set<State> visited = new HashSet<>();
+        Map<String, Object> solution = new HashMap<>();
+        stack.push(states.getFirst());
+        visited.add(states.getFirst());
+
+        while(!stack.isEmpty()) {
+            State currentState = stack.pop();
+            if(currentState.goalCheck()) {
+                ArrayList<State> path = new ArrayList<>();
+                path.add(currentState);
+                while(currentState.parent != null) {
+                    currentState = currentState.parent;
+                    path.add(currentState);
+                }
+                solution.put("visitedSize", visited.size());
+                solution.put("path", path);
+                return solution;
+            }
+            for(State nextState : currentState.nextStates()) {
+                if(!visited.contains(nextState)) {
+                    stack.push(nextState);
+                    visited.add(nextState);
+                }
+            }
+        }
+        return solution;
+    }
 }
