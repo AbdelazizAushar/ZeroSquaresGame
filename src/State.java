@@ -5,6 +5,7 @@ public class State {
     Player[] players;
     boolean isFinished;
     State parent = null;
+//    int cost = 1;
 
     public State(GridBlock[][] grid, Player[] players, State parent) {
         this.grid = grid;

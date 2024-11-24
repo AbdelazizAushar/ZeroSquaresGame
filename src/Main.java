@@ -16,26 +16,28 @@ public class Main {
 
     public static void main(String[] args) {
         String[][] grid = {
-                {"x","x","x","x","x","x","x","x","x","x","x"},
-                {"x","o","o","o","o","o","o","o","o","o","x"},
-                {"x","o","o","o","o","o","Y","o","o","o","x"},
-                {"x","x","o","o","o","G","o","o","o","o","x"},
-                {" ","x","o","o","B","o","x","x","x","x","x"},
-                {" ","x","o","R","o","o","x"," "," "," "," "},
-                {" ","x","x","x","x","x","x"," "," "," "," "},
+                {" "," "," "," "," "," "," "," ","x","x","x","x"},
+                {"x","x","x","x","x"," "," ","x","x","o","G","x"},
+                {"x","#","B","Y","x","x","x","x","o","o","o","x"},
+                {"x","o","o","o","o","o","o","o","o","o","o","x"},
+                {"x","x","x","x","x","x","x","x","x","x","x","x"},
         };
+
         Player[] players = {
-                new Player(1, 1, "yellow"),
-                new Player(1, 2, "red"),
-                new Player(1, 3, "blue"),
-                new Player(1, 4, "green")
+                new Player(3, 4, "blue"),
+                new Player(3, 5, "green"),
+                new Player(3, 6, "yellow"),
+                new Player(3, 7, "red")
         };
         GridBlock[][] gr = new GridHelper().makeGrid(grid);
         ZeroSquares game = new ZeroSquares(gr, players);
 
         // BFS Solution
-        Map<String, Object> solution = game.solveByDFS();
+//        Map<String, Object> solution = game.solveByDFS();
+//        Map<String, Object> solution = game.solveByBFS();
+        Map<String, Object> solution = game.solveByRDFS();
         printPath(solution);
+//        System.out.println(solution);
     }
 
 }

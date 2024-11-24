@@ -83,4 +83,63 @@ public class ZeroSquares {
         }
         return solution;
     }
+
+    public Map<String, Object> solveByRDFS() {
+        Map<String, Object> solution = new HashMap<>();
+        Set<State> visited = new HashSet<>();
+        State startState = states.getFirst();
+        return RDFSHelper(startState, solution, visited);
+    }
+
+    public Map<String, Object> RDFSHelper(State node, Map<String, Object> solution, Set<State> visited) {
+        ArrayList<State> nextStates = node.nextStates();
+        visited.add(node);
+        if(node.goalCheck()) {
+            ArrayList<State> path = new ArrayList<>();
+            path.add(node);
+            while(node.parent != null) {
+                node = node.parent;
+                path.add(node);
+            }
+            solution.put("visitedSize", visited.size());
+            solution.put("path", path);
+            return solution;
+        }
+        for (State nextState : nextStates) {
+            if(visited.contains(nextState)) continue;
+
+            RDFSHelper(nextState, solution, visited);
+        }
+        return solution;
+    }
+
+    public Map<String, Object> solveByUCS() {
+        PriorityQueue<State> queue = new PriorityQueue<>();
+        Set<State> visited = new HashSet<>();
+        Map<String, Object> solution = new HashMap<>();
+        queue.add(states.getFirst());
+        visited.add(states.getFirst());
+
+        while(!queue.isEmpty()) {
+            State currentState = queue.poll();
+            if(currentState.goalCheck()) {
+                ArrayList<State> path = new ArrayList<>();
+                path.add(currentState);
+                while(currentState.parent != null) {
+                    currentState = currentState.parent;
+                    path.add(currentState);
+                }
+                solution.put("visitedSize", visited.size());
+                solution.put("path", path);
+                return solution;
+            }
+            for(State nextState : currentState.nextStates()) {
+                if(!visited.contains(nextState)) {
+                    queue.add(nextState);
+                    visited.add(nextState);
+                }
+            }
+        }
+        return solution;
+    }
 }
