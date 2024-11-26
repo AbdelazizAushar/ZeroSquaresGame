@@ -14,24 +14,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String[][] grid = {
-                {"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"},
-                {"x", "o", "o", "o", "o", "o", "o", "o", "o", "o", "x"},
-                {"x", "o", "o", "o", "o", "o", "Y", "o", "o", "o", "x"},
-                {"x", "x", "o", "o", "o", "G", "o", "o", "o", "o", "x"},
-                {" ", "x", "o", "o", "B", "o", "x", "x", "x", "x", "x"},
-                {" ", "x", "o", "R", "o", "o", "x", " ", " ", " ", " "},
-                {" ", "x", "x", "x", "x", "x", "x", " ", " ", " ", " "},
-        };
-        Player[] players = {
-                new Player(1, 1, "yellow"),
-                new Player(1, 2, "red"),
-                new Player(1, 3, "blue"),
-                new Player(1, 4, "green")
-        };
+        System.out.println("Choose a level (1->6) : ");
+        int levelNum = scanner.nextInt();
+        Map<String, Object> level = LevelLoader.chooseLevel(levelNum);
 
-        GridBlock[][] gr = new GridHelper().makeGrid(grid);
-        ZeroSquares game = new ZeroSquares(gr, players);
+        ZeroSquares game = new ZeroSquares((GridBlock[][]) level.get("grid"), (Player[]) level.get("players"));
 
         System.out.print("""
                 [1] solve using BFS
