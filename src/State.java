@@ -5,7 +5,7 @@ public class State {
     Player[] players;
     boolean isFinished;
     State parent = null;
-//    int cost = 1;
+    int cost = 1;
 
     public State(GridBlock[][] grid, Player[] players, State parent) {
         this.grid = grid;
@@ -193,7 +193,7 @@ public class State {
     private State deepCopy(State state) {
         GridBlock[][] newGridBlock = deepCopyGridHelper();
         Player[] newPlayers = deepCopyPlayerHelper();
-        return new State(newGridBlock, newPlayers ,this);
+        return new State(newGridBlock, newPlayers, this);
     }
 
     private Player[] deepCopyPlayerHelper() {
@@ -242,8 +242,13 @@ public class State {
         String[] directions = {"w", "a", "s", "d"};
         for (String direction : directions) {
             State newState = move(direction);
-            if(!this.equals(newState)) nextStates.add(newState);
+            if (!this.equals(newState)) nextStates.add(newState);
         }
         return nextStates;
+    }
+
+    public int getCost() {
+        if (this.parent == null) return 0;
+        return cost + parent.getCost();
     }
 }

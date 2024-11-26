@@ -12,7 +12,7 @@ public class ZeroSquares {
 
     public void StartGame() {
         State lastState = states.getLast();
-        while(!lastState.goalCheck() && !lastState.playerOutCheck()) {
+        while (!lastState.goalCheck() && !lastState.playerOutCheck()) {
             lastState.printGrid();
             Scanner scanner = new Scanner(System.in);
             String direction = scanner.nextLine();
@@ -31,12 +31,12 @@ public class ZeroSquares {
         queue.add(states.getFirst());
         visited.add(states.getFirst());
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             State currentState = queue.poll();
-            if(currentState.goalCheck()) {
+            if (currentState.goalCheck()) {
                 ArrayList<State> path = new ArrayList<>();
                 path.add(currentState);
-                while(currentState.parent != null) {
+                while (currentState.parent != null) {
                     currentState = currentState.parent;
                     path.add(currentState);
                 }
@@ -44,8 +44,8 @@ public class ZeroSquares {
                 solution.put("path", path);
                 return solution;
             }
-            for(State nextState : currentState.nextStates()) {
-                if(!visited.contains(nextState)) {
+            for (State nextState : currentState.nextStates()) {
+                if (!visited.contains(nextState)) {
                     queue.add(nextState);
                     visited.add(nextState);
                 }
@@ -61,12 +61,12 @@ public class ZeroSquares {
         stack.push(states.getFirst());
         visited.add(states.getFirst());
 
-        while(!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             State currentState = stack.pop();
-            if(currentState.goalCheck()) {
+            if (currentState.goalCheck()) {
                 ArrayList<State> path = new ArrayList<>();
                 path.add(currentState);
-                while(currentState.parent != null) {
+                while (currentState.parent != null) {
                     currentState = currentState.parent;
                     path.add(currentState);
                 }
@@ -74,8 +74,8 @@ public class ZeroSquares {
                 solution.put("path", path);
                 return solution;
             }
-            for(State nextState : currentState.nextStates()) {
-                if(!visited.contains(nextState)) {
+            for (State nextState : currentState.nextStates()) {
+                if (!visited.contains(nextState)) {
                     stack.push(nextState);
                     visited.add(nextState);
                 }
@@ -94,10 +94,10 @@ public class ZeroSquares {
     public Map<String, Object> RDFSHelper(State node, Map<String, Object> solution, Set<State> visited) {
         ArrayList<State> nextStates = node.nextStates();
         visited.add(node);
-        if(node.goalCheck()) {
+        if (node.goalCheck()) {
             ArrayList<State> path = new ArrayList<>();
             path.add(node);
-            while(node.parent != null) {
+            while (node.parent != null) {
                 node = node.parent;
                 path.add(node);
             }
@@ -106,26 +106,29 @@ public class ZeroSquares {
             return solution;
         }
         for (State nextState : nextStates) {
-            if(visited.contains(nextState)) continue;
-
-            RDFSHelper(nextState, solution, visited);
+            if (!visited.contains(nextState)) {
+                Map<String, Object> result = RDFSHelper(nextState, solution, visited);
+                if (result != null) {
+                    return result;
+                }
+            }
         }
-        return solution;
+        return null;
     }
 
     public Map<String, Object> solveByUCS() {
-        PriorityQueue<State> queue = new PriorityQueue<>();
+        PriorityQueue<State> queue = new PriorityQueue<>(Comparator.comparingDouble(State::getCost));
         Set<State> visited = new HashSet<>();
         Map<String, Object> solution = new HashMap<>();
         queue.add(states.getFirst());
         visited.add(states.getFirst());
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             State currentState = queue.poll();
-            if(currentState.goalCheck()) {
+            if (currentState.goalCheck()) {
                 ArrayList<State> path = new ArrayList<>();
                 path.add(currentState);
-                while(currentState.parent != null) {
+                while (currentState.parent != null) {
                     currentState = currentState.parent;
                     path.add(currentState);
                 }
@@ -133,8 +136,8 @@ public class ZeroSquares {
                 solution.put("path", path);
                 return solution;
             }
-            for(State nextState : currentState.nextStates()) {
-                if(!visited.contains(nextState)) {
+            for (State nextState : currentState.nextStates()) {
+                if (!visited.contains(nextState)) {
                     queue.add(nextState);
                     visited.add(nextState);
                 }

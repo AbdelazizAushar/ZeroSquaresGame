@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     private static void printPath(Map<String, Object> solution) {
@@ -15,29 +13,51 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         String[][] grid = {
-                {" "," "," "," "," "," "," "," ","x","x","x","x"},
-                {"x","x","x","x","x"," "," ","x","x","o","G","x"},
-                {"x","#","B","Y","x","x","x","x","o","o","o","x"},
-                {"x","o","o","o","o","o","o","o","o","o","o","x"},
-                {"x","x","x","x","x","x","x","x","x","x","x","x"},
+                {"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"},
+                {"x", "o", "o", "o", "o", "o", "o", "o", "o", "o", "x"},
+                {"x", "o", "o", "o", "o", "o", "Y", "o", "o", "o", "x"},
+                {"x", "x", "o", "o", "o", "G", "o", "o", "o", "o", "x"},
+                {" ", "x", "o", "o", "B", "o", "x", "x", "x", "x", "x"},
+                {" ", "x", "o", "R", "o", "o", "x", " ", " ", " ", " "},
+                {" ", "x", "x", "x", "x", "x", "x", " ", " ", " ", " "},
+        };
+        Player[] players = {
+                new Player(1, 1, "yellow"),
+                new Player(1, 2, "red"),
+                new Player(1, 3, "blue"),
+                new Player(1, 4, "green")
         };
 
-        Player[] players = {
-                new Player(3, 4, "blue"),
-                new Player(3, 5, "green"),
-                new Player(3, 6, "yellow"),
-                new Player(3, 7, "red")
-        };
         GridBlock[][] gr = new GridHelper().makeGrid(grid);
         ZeroSquares game = new ZeroSquares(gr, players);
 
-        // BFS Solution
-//        Map<String, Object> solution = game.solveByDFS();
-//        Map<String, Object> solution = game.solveByBFS();
-        Map<String, Object> solution = game.solveByRDFS();
+        System.out.print("""
+                [1] solve using BFS
+                [2] solve using DFS
+                [3] solve using RDFS
+                [4] solve using UCS
+                Choose a number between 1 and 4 :
+                """);
+        int choice = scanner.nextInt();
+        Map<String, Object> solution = new HashMap<>();
+        switch (choice) {
+            case 1:
+                solution = game.solveByBFS();
+                break;
+            case 2:
+                solution = game.solveByDFS();
+                break;
+            case 3:
+                solution = game.solveByRDFS();
+                break;
+            case 4:
+                solution = game.solveByUCS();
+                break;
+            default:
+                break;
+        }
         printPath(solution);
-//        System.out.println(solution);
     }
-
 }
