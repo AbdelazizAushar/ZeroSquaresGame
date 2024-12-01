@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a level (1->6) : ");
+        System.out.println("Choose a level (1->7) : ");
         int levelNum = scanner.nextInt();
         Map<String, Object> level = LevelLoader.chooseLevel(levelNum);
 
@@ -25,7 +25,7 @@ public class Main {
                 [2] solve using DFS
                 [3] solve using RDFS
                 [4] solve using UCS
-                [5] solve using Hill Climbing
+                [5] solve using Steep Hill Climbing
                 [6] solve using A*
                 Choose a number between 1 and 6 :
                 """);
@@ -45,13 +45,17 @@ public class Main {
                 solution = game.solveByUCS();
                 break;
             case 5:
-                solution = game.solveByHillClimbing();
+                solution = game.solveBySteepHillClimbing();
                 break;
             case 6:
                 solution = game.solveByAStar();
                 break;
             default:
                 break;
+        }
+        if(solution == null) {
+            System.out.println("No solution found");
+            return;
         }
         printPath(solution);
     }
