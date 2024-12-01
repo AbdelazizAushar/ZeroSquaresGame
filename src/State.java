@@ -247,8 +247,25 @@ public class State {
         return nextStates;
     }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     public int getCost() {
-        if (this.parent == null) return 0;
-        return cost + parent.getCost();
+//        if (this.parent == null) return 0;
+//        return cost + parent.getCost();
+        return cost;
+    }
+
+    public int getHeuristic() {
+        int heuristic = 0;
+        for(Player player : players) {
+            heuristic += player.getManhattanDistance(grid);
+        }
+        return heuristic;
+    }
+
+    public int getHeuristicWithCost() {
+        return getHeuristic() + getCost();
     }
 }

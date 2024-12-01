@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class Player {
-    int i,j;
+    int i, j;
     String color;
     boolean isInGoal;
     boolean isOut;
@@ -57,5 +57,20 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(i, j, color, isInGoal, isOut);
+    }
+
+    public int getManhattanDistance(GridBlock[][] grid) {
+        if (isInGoal) return 0;
+        int manI = 0;
+        int manJ = 0;
+        for (int k = 0; k < grid.length; k++) {
+            for (int l = 0; l < grid[k].length; l++) {
+                if (grid[k][l].type.toLowerCase().equals(String.valueOf(color.charAt(0)).toLowerCase())) {
+                    manI = k;
+                    manJ = l;
+                }
+            }
+        }
+        return Math.abs(i - manI) + Math.abs(j - manJ);
     }
 }

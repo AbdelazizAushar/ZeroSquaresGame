@@ -25,7 +25,9 @@ public class Main {
                 [2] solve using DFS
                 [3] solve using RDFS
                 [4] solve using UCS
-                Choose a number between 1 and 4 :
+                [5] solve using Hill Climbing
+                [6] solve using A*
+                Choose a number between 1 and 6 :
                 """);
         int choice = scanner.nextInt();
         Map<String, Object> solution = new HashMap<>();
@@ -41,6 +43,12 @@ public class Main {
                 break;
             case 4:
                 solution = game.solveByUCS();
+                break;
+            case 5:
+                solution = game.solveByHillClimbing();
+                break;
+            case 6:
+                solution = game.solveByAStar();
                 break;
             default:
                 break;
