@@ -69,8 +69,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a level (1->7) : ");
+        System.out.println("Choose a level (1->3) : ");
         int levelNum = scanner.nextInt();
+        if(levelNum > 3 || levelNum < 1) {
+            System.out.println("No Level Found, Retry Again");
+            return;
+        }
         Map<String, Object> level = LevelLoader.chooseLevel(levelNum);
 
         ZeroSquares game = new ZeroSquares((GridBlock[][]) level.get("grid"), (Player[]) level.get("players"));

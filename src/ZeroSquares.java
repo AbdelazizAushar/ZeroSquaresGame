@@ -43,7 +43,6 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
-            visited.add(currentState);
             if(!currentState.isSolvable()) continue;
             if (currentState.goalCheck()) {
                 ArrayList<State> path = createSolution(currentState);
