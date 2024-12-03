@@ -1,5 +1,5 @@
 Algorithm: A Star
-Visited States: 447
+Visited States: 296
 Path States: 45
-Time: 102 milliseconds
-Memory Used: 75621344 bytes
+Time: 51 milliseconds
+Memory Used: 55125656 bytes

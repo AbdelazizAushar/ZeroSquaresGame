@@ -35,7 +35,6 @@ public class Player {
         return j;
     }
 
-    // Copy constructor
     public Player(Player player) {
         this.i = player.i;
         this.j = player.j;
@@ -50,24 +49,33 @@ public class Player {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
         return i == player.i && j == player.j
-                && isInGoal == player.isInGoal && isOut == player.isOut
                 && Objects.equals(color, player.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(i, j, color, isInGoal, isOut);
+        return Objects.hash(i, j, color);
     }
 
     public int getManhattanDistance(GridBlock[][] grid) {
         if (isInGoal) return 0;
-        int manI = 0;
-        int manJ = 0;
+        int manI = -1;
+        int manJ = -1;
         for (int k = 0; k < grid.length; k++) {
             for (int l = 0; l < grid[k].length; l++) {
                 if (grid[k][l].type.toLowerCase().equals(String.valueOf(color.charAt(0)).toLowerCase())) {
                     manI = k;
                     manJ = l;
+                }
+            }
+        }
+        if(manJ == -1 && manI == -1) {
+            for (int k = 0; k < grid.length; k++) {
+                for (int l = 0; l < grid[k].length; l++) {
+                    if (grid[k][l].isGlobalGoal()) {
+                        manI = k;
+                        manJ = l;
+                    }
                 }
             }
         }

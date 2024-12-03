@@ -17,8 +17,8 @@ public class Main {
     }
 
     private static void comparingAlgorithms() throws IOException {
-        int[] levels = {1, 2};
-        int[] levelName = {10, 20};
+        int[] levels = {1, 2, 3};
+        int[] levelName = {10, 20, 30};
         for (int i = 0; i < levels.length; i++) {
             Map<String, Object> level = LevelLoader.chooseLevel(levels[i]);
             ZeroSquares game = new ZeroSquares((GridBlock[][]) level.get("grid"), (Player[]) level.get("players"));

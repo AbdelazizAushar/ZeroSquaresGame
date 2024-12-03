@@ -2,4 +2,4 @@ Algorithm: Simple Hill
 Visited States: 5
 Path States: 5
 Time: 1 milliseconds
-Memory Used: 23222216 bytes
+Memory Used: 13530696 bytes

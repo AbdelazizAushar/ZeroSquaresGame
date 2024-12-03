@@ -8,7 +8,7 @@ public class GridBlock {
     // x == !isFree, !isGoal, !isWeakBlock
     // - == isFree, !isGoal, isWeakBlock
     // # == isFree, isGoal, !isWeakBlock
-    // goal == isFree, !isGoal, isWeakBlock
+    // goal == isFree, isGoal, !isWeakBlock
     public GridBlock(String type) {
         this.type = type;
         switch (type) {
@@ -69,8 +69,6 @@ public class GridBlock {
     public void setGoalColor(String goalColor) {
         this.type = String.valueOf(goalColor.toUpperCase().charAt(0));
     }
-
-    //
 
     @Override
     public boolean equals(Object o) {

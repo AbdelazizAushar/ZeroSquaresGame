@@ -4,7 +4,7 @@ public class State {
     GridBlock[][] grid;
     Player[] players;
     boolean isFinished;
-    State parent = null;
+    State parent;
     int cost = 1;
 
     public State(GridBlock[][] grid, Player[] players, State parent) {
@@ -88,9 +88,9 @@ public class State {
             case "BL":
                 return "\u001B[40m";
             case "P":
-                return "\u001B[35m";
+                return "\u001B[45m";
             case "C":
-                return "\u001B[36m";
+                return "\u001B[46m";
             default:
                 return "\u001B[0m";
         }
@@ -199,24 +199,24 @@ public class State {
 
     // Done
     private State deepCopy(State state) {
-        GridBlock[][] newGridBlock = deepCopyGridHelper();
-        Player[] newPlayers = deepCopyPlayerHelper();
-        return new State(newGridBlock, newPlayers, this);
+        GridBlock[][] newGridBlock = deepCopyGridHelper(state);
+        Player[] newPlayers = deepCopyPlayerHelper(state);
+        return new State(newGridBlock, newPlayers, state);
     }
 
-    private Player[] deepCopyPlayerHelper() {
-        Player[] newPlayers = new Player[players.length];
-        for (int i = 0; i < players.length; i++) {
-            newPlayers[i] = new Player(players[i]);
+    private Player[] deepCopyPlayerHelper(State state) {
+        Player[] newPlayers = new Player[state.players.length];
+        for (int i = 0; i < state.players.length; i++) {
+            newPlayers[i] = new Player(state.players[i]);
         }
         return newPlayers;
     }
 
-    private GridBlock[][] deepCopyGridHelper() {
-        GridBlock[][] newGridBlock = new GridBlock[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                newGridBlock[i][j] = new GridBlock(grid[i][j]);
+    private GridBlock[][] deepCopyGridHelper(State state) {
+        GridBlock[][] newGridBlock = new GridBlock[state.grid.length][state.grid[0].length];
+        for (int i = 0; i < state.grid.length; i++) {
+            for (int j = 0; j < state.grid[i].length; j++) {
+                newGridBlock[i][j] = new GridBlock(state.grid[i][j]);
             }
         }
         return newGridBlock;
@@ -229,9 +229,14 @@ public class State {
         State otherState = (State) obj;
 
         if (this.players.length != otherState.players.length) return false;
+
+        Arrays.sort(this.players, Comparator.comparing(player -> player.color));
+        Arrays.sort(otherState.players, Comparator.comparing(player -> player.color));
+
         for (int i = 0; i < players.length; i++) {
             if (!this.players[i].equals(otherState.players[i])) return false;
         }
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (!this.grid[i][j].equals(otherState.grid[i][j])) return false;
@@ -242,6 +247,7 @@ public class State {
 
     @Override
     public int hashCode() {
+        Arrays.sort(this.players, Comparator.comparing(player -> player.color));
         return Objects.hash(Arrays.deepHashCode(grid), Arrays.hashCode(players), isFinished);
     }
 
@@ -260,10 +266,7 @@ public class State {
     }
 
     public int getCost() {
-        // wasd
-        for (Player player : players) {
-
-        }
+        if (this.parent == null) return 0;
         return cost;
     }
 
@@ -277,5 +280,21 @@ public class State {
 
     public int getHeuristicWithCost() {
         return getHeuristic() + getCost();
+    }
+
+    public boolean isSolvable() {
+        Map<String, Integer> colorDuplicates = new HashMap<String, Integer>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if(grid[i][j].isGoal) {
+                    if(colorDuplicates.get(grid[i][j].type) == null) {
+                        colorDuplicates.put(grid[i][j].type, 1);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return !playerOutCheck();
     }
 }

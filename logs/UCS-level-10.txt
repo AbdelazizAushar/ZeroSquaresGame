@@ -1,5 +1,5 @@
 Algorithm: UCS
-Visited States: 456
+Visited States: 301
 Path States: 45
-Time: 24 milliseconds
-Memory Used: 13797136 bytes
+Time: 17 milliseconds
+Memory Used: 6347224 bytes

@@ -24,6 +24,16 @@ public class ZeroSquares {
         System.out.println("Game Ended");
     }
 
+    private ArrayList<State> createSolution(State currentState) {
+        ArrayList<State> path = new ArrayList<>();
+        path.add(currentState);
+        while (currentState.parent != null) {
+            currentState = currentState.parent;
+            path.add(currentState);
+        }
+        return path;
+    }
+
     public Map<String, Object> solveByBFS() {
         Queue<State> queue = new LinkedList<>();
         Set<State> visited = new HashSet<>();
@@ -33,13 +43,10 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
+            visited.add(currentState);
+            if(!currentState.isSolvable()) continue;
             if (currentState.goalCheck()) {
-                ArrayList<State> path = new ArrayList<>();
-                path.add(currentState);
-                while (currentState.parent != null) {
-                    currentState = currentState.parent;
-                    path.add(currentState);
-                }
+                ArrayList<State> path = createSolution(currentState);
                 solution.put("visitedSize", visited.size());
                 solution.put("path", path);
                 return solution;
@@ -62,14 +69,11 @@ public class ZeroSquares {
 
         while (!stack.isEmpty()) {
             State currentState = stack.pop();
+            if(!currentState.isSolvable()) continue;
+            if(visited.contains(currentState)) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
-                ArrayList<State> path = new ArrayList<>();
-                path.add(currentState);
-                while (currentState.parent != null) {
-                    currentState = currentState.parent;
-                    path.add(currentState);
-                }
+                ArrayList<State> path = createSolution(currentState);
                 solution.put("visitedSize", visited.size());
                 solution.put("path", path);
                 return solution;
@@ -91,7 +95,8 @@ public class ZeroSquares {
     }
 
     public Map<String, Object> RDFSHelper(State node, Map<String, Object> solution, Set<State> visited) {
-        ArrayList<State> nextStates = node.nextStates();
+        if(visited.contains(node)) return null;
+        if(!node.isSolvable()) return null;
         visited.add(node);
         if (node.goalCheck()) {
             ArrayList<State> path = new ArrayList<>();
@@ -104,7 +109,7 @@ public class ZeroSquares {
             solution.put("path", path);
             return solution;
         }
-        for (State nextState : nextStates) {
+        for (State nextState : node.nextStates()) {
             if (!visited.contains(nextState)) {
                 Map<String, Object> result = RDFSHelper(nextState, solution, visited);
                 if (result != null) {
@@ -123,14 +128,11 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
+            if(!currentState.isSolvable()) continue;
+            if(visited.contains(currentState)) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
-                ArrayList<State> path = new ArrayList<>();
-                path.add(currentState);
-                while (currentState.parent != null) {
-                    currentState = currentState.parent;
-                    path.add(currentState);
-                }
+                ArrayList<State> path = createSolution(currentState);
                 solution.put("visitedSize", visited.size());
                 solution.put("path", path);
                 return solution;
@@ -195,7 +197,6 @@ public class ZeroSquares {
                     break;
                 }
             }
-
             if (currentState.getHeuristic() <= minHeuristic) {
                 ArrayList<State> path = new ArrayList<>();
                 path.add(tempState);
@@ -219,14 +220,11 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
+            if(!currentState.isSolvable()) continue;
+            if(visited.contains(currentState)) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
-                ArrayList<State> path = new ArrayList<>();
-                path.add(currentState);
-                while (currentState.parent != null) {
-                    currentState = currentState.parent;
-                    path.add(currentState);
-                }
+                ArrayList<State> path = createSolution(currentState);
                 solution.put("visitedSize", visited.size());
                 solution.put("path", path);
                 return solution;
