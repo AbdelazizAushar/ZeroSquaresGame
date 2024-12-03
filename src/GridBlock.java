@@ -7,7 +7,7 @@ public class GridBlock {
     // o == isFree, !isGoal, !isWeakBlock
     // x == !isFree, !isGoal, !isWeakBlock
     // - == isFree, !isGoal, isWeakBlock
-    // @ == isFree, isGoal, !isWeakBlock
+    // # == isFree, isGoal, !isWeakBlock
     // goal == isFree, !isGoal, isWeakBlock
     public GridBlock(String type) {
         this.type = type;
@@ -27,7 +27,7 @@ public class GridBlock {
                 isGoal = false;
                 isWeakBlock = true;
                 break;
-            case "@":
+            case "#":
                 isFree = true;
                 isGoal = true;
                 isWeakBlock = false;

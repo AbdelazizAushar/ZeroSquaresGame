@@ -1,0 +1,5 @@
+Algorithm: DFS
+Visited States: 1214
+Path States: 165
+Time: 22 milliseconds
+Memory Used: 101331968 bytes

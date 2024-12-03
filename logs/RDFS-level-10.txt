@@ -1,0 +1,5 @@
+Algorithm: RDFS
+Visited States: 384
+Path States: 147
+Time: 5 milliseconds
+Memory Used: 22691888 bytes

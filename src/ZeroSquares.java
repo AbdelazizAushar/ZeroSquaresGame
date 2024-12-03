@@ -59,7 +59,6 @@ public class ZeroSquares {
         Set<State> visited = new HashSet<>();
         Map<String, Object> solution = new HashMap<>();
         stack.push(states.getFirst());
-//        visited.add(states.getFirst());
 
         while (!stack.isEmpty()) {
             State currentState = stack.pop();
@@ -78,7 +77,6 @@ public class ZeroSquares {
             for (State nextState : currentState.nextStates()) {
                 if (!visited.contains(nextState)) {
                     stack.push(nextState);
-//                    visited.add(nextState);
                 }
             }
         }
@@ -122,7 +120,6 @@ public class ZeroSquares {
         Set<State> visited = new HashSet<>();
         Map<String, Object> solution = new HashMap<>();
         queue.add(states.getFirst());
-//        visited.add(states.getFirst());
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
@@ -143,43 +140,11 @@ public class ZeroSquares {
                 if (!visited.contains(nextState) || tempCost < nextState.getCost()) {
                     nextState.setCost(tempCost);
                     queue.add(nextState);
-//                    visited.add(nextState);
                 }
             }
         }
         return solution;
     }
-
-//    public Map<String, Object> solveByHillClimbing() {
-//        PriorityQueue<State> queue = new PriorityQueue<>(Comparator.comparingDouble(State::getHeuristic));
-//        Set<State> visited = new HashSet<>();
-//        Map<String, Object> solution = new HashMap<>();
-//        queue.add(states.getFirst());
-////        visited.add(states.getFirst());
-//
-//        while (!queue.isEmpty()) {
-//            State currentState = queue.poll();
-//            visited.add(currentState);
-//            if (currentState.goalCheck()) {
-//                ArrayList<State> path = new ArrayList<>();
-//                path.add(currentState);
-//                while (currentState.parent != null) {
-//                    currentState = currentState.parent;
-//                    path.add(currentState);
-//                }
-//                solution.put("visitedSize", visited.size());
-//                solution.put("path", path);
-//                return solution;
-//            }
-//            for (State nextState : currentState.nextStates()) {
-//                if (!visited.contains(nextState)) {
-//                    queue.add(nextState);
-////                    visited.add(nextState);
-//                }
-//            }
-//        }
-//        return solution;
-//    }
 
     public Map<String, Object> solveBySteepHillClimbing() {
         Set<State> visited = new HashSet<>();
@@ -213,12 +178,44 @@ public class ZeroSquares {
         }
     }
 
+    public Map<String, Object> solveBySimpleHillClimbing() {
+        Set<State> visited = new HashSet<>();
+        Map<String, Object> solution = new HashMap<>();
+        State currentState = states.getFirst();
+
+        while (true) {
+            State tempState = currentState;
+            visited.add(tempState);
+            int minHeuristic = tempState.getHeuristic();
+            List<State> nextStates = tempState.nextStates();
+            for (State nextState : nextStates) {
+                if (nextState.getHeuristic() < minHeuristic) {
+                    minHeuristic = nextState.getHeuristic();
+                    tempState = nextState;
+                    break;
+                }
+            }
+
+            if (currentState.getHeuristic() <= minHeuristic) {
+                ArrayList<State> path = new ArrayList<>();
+                path.add(tempState);
+                while (tempState.parent != null) {
+                    tempState = tempState.parent;
+                    path.add(tempState);
+                }
+                solution.put("visitedSize", visited.size());
+                solution.put("path", path);
+                return solution;
+            }
+            currentState = tempState;
+        }
+    }
+
     public Map<String, Object> solveByAStar() {
         PriorityQueue<State> queue = new PriorityQueue<>(Comparator.comparingDouble(State::getHeuristicWithCost));
         Set<State> visited = new HashSet<>();
         Map<String, Object> solution = new HashMap<>();
         queue.add(states.getFirst());
-//        visited.add(states.getFirst());
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
@@ -239,7 +236,6 @@ public class ZeroSquares {
                 if (!visited.contains(nextState) || tempCost < nextState.getCost()) {
                     nextState.setCost(tempCost);
                     queue.add(nextState);
-//                    visited.add(nextState);
                 }
             }
         }

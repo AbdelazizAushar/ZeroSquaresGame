@@ -87,6 +87,10 @@ public class State {
                 return "\u001B[47m";
             case "BL":
                 return "\u001B[40m";
+            case "P":
+                return "\u001B[35m";
+            case "C":
+                return "\u001B[36m";
             default:
                 return "\u001B[0m";
         }
@@ -102,6 +106,10 @@ public class State {
                 return "\u001B[33m";
             case "blue":
                 return "\u001B[34m";
+            case "purple":
+                return "\u001B[35m";
+            case "cyan":
+                return "\u001B[36m";
             default:
                 return "\u001B[0m";
         }
@@ -252,14 +260,16 @@ public class State {
     }
 
     public int getCost() {
-//        if (this.parent == null) return 0;
-//        return cost + parent.getCost();
+        // wasd
+        for (Player player : players) {
+
+        }
         return cost;
     }
 
     public int getHeuristic() {
         int heuristic = 0;
-        for(Player player : players) {
+        for (Player player : players) {
             heuristic += player.getManhattanDistance(grid);
         }
         return heuristic;
