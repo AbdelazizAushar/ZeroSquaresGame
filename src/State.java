@@ -5,14 +5,14 @@ public class State {
     Player[] players;
     boolean isFinished;
     State parent;
-    int cost = 1;
+    int cost, transitionCost;
 
     public State(GridBlock[][] grid, Player[] players, State parent) {
         this.grid = grid;
         this.players = players;
         this.isFinished = false;
         this.parent = parent;
-        initPlayersInGrid();
+        if(parent == null) initPlayersInGrid();
     }
 
     private void initPlayersInGrid() {
@@ -254,11 +254,40 @@ public class State {
     public ArrayList<State> nextStates() {
         ArrayList<State> nextStates = new ArrayList<>();
         String[] directions = {"w", "a", "s", "d"};
-        for (String direction : directions) {
-            State newState = move(direction);
-            if (!this.equals(newState)) nextStates.add(newState);
+        int[][] directionIndexes = {
+                {-1,0}, //w
+                {0,-1}, //a
+                {1,0},  //s
+                {0,1},  //d
+        };
+        for (int i = 0; i < directions.length; i++) {
+            State newState = move(directions[i]);
+            if (!this.equals(newState)) {
+                nextStates.add(newState);
+                newState.setTransitionCost(calculateCost(directionIndexes[i]));
+            }
         }
         return nextStates;
+    }
+
+    private int calculateCost(int[] direction) {
+        int i = direction[0];
+        int j = direction[1];
+        int cost = 0;
+        for(Player player : players) {
+            int newI = player.i;
+            int newJ = player.j;
+            while (isValidMove(newI + i, newJ + j) && !player.isInGoal && !player.isOut) {
+                cost++;
+                newI += i;
+                newJ += j;
+            }
+        }
+        return cost;
+    }
+
+    public void setTransitionCost(int transitionCost) {
+        this.transitionCost = transitionCost;
     }
 
     public void setCost(int cost) {
@@ -268,6 +297,10 @@ public class State {
     public int getCost() {
         if (this.parent == null) return 0;
         return cost;
+    }
+
+    public int getTransitionCost() {
+        return transitionCost;
     }
 
     public int getHeuristic() {

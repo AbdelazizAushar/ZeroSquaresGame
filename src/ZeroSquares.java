@@ -138,7 +138,7 @@ public class ZeroSquares {
                 return solution;
             }
             for (State nextState : currentState.nextStates()) {
-                int tempCost = currentState.getCost() + nextState.getCost();
+                int tempCost = currentState.getCost() + nextState.getTransitionCost();
                 if (!visited.contains(nextState) || tempCost < nextState.getCost()) {
                     nextState.setCost(tempCost);
                     queue.add(nextState);
@@ -230,7 +230,7 @@ public class ZeroSquares {
                 return solution;
             }
             for (State nextState : currentState.nextStates()) {
-                int tempCost = currentState.getCost() + nextState.getCost();
+                int tempCost = currentState.getCost() + nextState.getTransitionCost();
                 if (!visited.contains(nextState) || tempCost < nextState.getCost()) {
                     nextState.setCost(tempCost);
                     queue.add(nextState);
