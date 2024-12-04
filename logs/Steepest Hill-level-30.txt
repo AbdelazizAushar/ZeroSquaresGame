@@ -1,5 +1,5 @@
 Algorithm: Steepest Hill
 Visited States: 3
 Path States: 3
-Time: 1 milliseconds
-Memory Used: 1352663040 bytes
+Time: 3 milliseconds
+Memory Used: 936378368 bytes

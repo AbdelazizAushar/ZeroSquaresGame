@@ -63,7 +63,7 @@ public class GridBlock {
     }
 
     public boolean isGlobalGoal() {
-        return isGoal && type == "#";
+        return isGoal && Objects.equals(type, "#");
     }
 
     public void setGoalColor(String goalColor) {

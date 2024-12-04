@@ -68,8 +68,8 @@ public class ZeroSquares {
 
         while (!stack.isEmpty()) {
             State currentState = stack.pop();
-            if(!currentState.isSolvable()) continue;
-            if(visited.contains(currentState)) continue;
+            if (!currentState.isSolvable()) continue;
+            if (visited.contains(currentState)) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
                 ArrayList<State> path = createSolution(currentState);
@@ -94,8 +94,8 @@ public class ZeroSquares {
     }
 
     public Map<String, Object> RDFSHelper(State node, Map<String, Object> solution, Set<State> visited) {
-        if(visited.contains(node)) return null;
-        if(!node.isSolvable()) return null;
+        if (visited.contains(node)) return null;
+        if (!node.isSolvable()) return null;
         visited.add(node);
         if (node.goalCheck()) {
             ArrayList<State> path = new ArrayList<>();
@@ -127,8 +127,7 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
-            if(!currentState.isSolvable()) continue;
-            if(visited.contains(currentState)) continue;
+            if (!currentState.isSolvable()) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
                 ArrayList<State> path = createSolution(currentState);
@@ -219,8 +218,7 @@ public class ZeroSquares {
 
         while (!queue.isEmpty()) {
             State currentState = queue.poll();
-            if(!currentState.isSolvable()) continue;
-            if(visited.contains(currentState)) continue;
+            if (!currentState.isSolvable()) continue;
             visited.add(currentState);
             if (currentState.goalCheck()) {
                 ArrayList<State> path = createSolution(currentState);
