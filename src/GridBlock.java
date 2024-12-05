@@ -73,11 +73,8 @@ public class GridBlock {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GridBlock gridBlock = (GridBlock) o;
-        return isFree == gridBlock.isFree && isGoal == gridBlock.isGoal
-                && isWeakBlock == gridBlock.isWeakBlock &&
-                Objects.equals(type, gridBlock.type);
+        if (!(o instanceof GridBlock gridBlock)) return false;
+        return isFree == gridBlock.isFree && isGoal == gridBlock.isGoal && isWeakBlock == gridBlock.isWeakBlock && Objects.equals(type, gridBlock.type);
     }
 
     @Override

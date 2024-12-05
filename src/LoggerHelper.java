@@ -9,7 +9,7 @@ public class LoggerHelper {
     public static Logger logger = Logger.getLogger(ZeroSquares.class.getName());
 
     public void loggerHelper(String algoName, int level,  Map<String, Object> solution, long time, long memory) throws IOException {
-        FileHandler fh = new FileHandler("./logs/" +algoName+"-level-"+level +".txt");
+        FileHandler fh = new FileHandler("./logs/" +algoName+"-level-"+level +".log");
         fh.setFormatter(new MyLoggerFormatter());
         logger.addHandler(fh);
         int visitedSize = (int) solution.get("visitedSize");
@@ -23,5 +23,4 @@ public class LoggerHelper {
 
         fh.close();
     }
-
 }

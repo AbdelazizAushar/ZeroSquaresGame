@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.*;
 
 public class Main {
     static LoggerHelper logger = new LoggerHelper();
@@ -28,36 +27,42 @@ public class Main {
             long memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("BFS", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveByDFS();
             end = System.currentTimeMillis();
             memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("DFS", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveByUCS();
             end = System.currentTimeMillis();
             memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("UCS", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveByRDFS();
             end = System.currentTimeMillis();
             memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("RDFS", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveBySimpleHillClimbing();
             end = System.currentTimeMillis();
             memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("Simple Hill", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveBySteepHillClimbing();
             end = System.currentTimeMillis();
             memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             logger.loggerHelper("Steepest Hill", levelName[i], solution, (end - start), memory);
 
+            System.gc();
             start = System.currentTimeMillis();
             solution = game.solveByAStar();
             end = System.currentTimeMillis();

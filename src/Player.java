@@ -46,15 +46,13 @@ public class Player {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return i == player.i && j == player.j
-                && Objects.equals(color, player.color);
+        if (!(o instanceof Player player)) return false;
+        return i == player.i && j == player.j && isInGoal == player.isInGoal && isOut == player.isOut && Objects.equals(color, player.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(i, j, color);
+        return Objects.hash(i, j, color, isInGoal, isOut);
     }
 
     public int getManhattanDistance(GridBlock[][] grid) {
