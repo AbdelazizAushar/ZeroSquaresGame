@@ -1,5 +1,5 @@
 Algorithm: BFS
 Visited States: 302
 Path States: 45
-Time: 42 milliseconds
-Memory Used: 11492440 bytes
+Time: 25 milliseconds
+Memory Used: 22481544 bytes
